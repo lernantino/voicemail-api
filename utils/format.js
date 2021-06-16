@@ -1,3 +1,18 @@
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+
 module.exports = {
     formatText: (text) => {
         return text.replace(/\w+@\w+\.\w+/, (match) => {
@@ -59,7 +74,21 @@ module.exports = {
     
         return time;
     },
-    formatDate: () => {
-        return;
+    formatDate: (date) => {
+      const today = new Date().getTime();
+      const diff = today - date;
+      const days = Math.floor(diff / 1000 / 60 / 60 / 24);
+  
+      if (days < 1) {
+        const hours = Math.floor(diff / 1000 / 60 / 60);
+        return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+      }
+      
+      if (days < 7) {
+        return `${days} day${days > 1 ? 's' : ''} ago`;
+      }
+  
+      const newDate = new Date(date);
+      return `${months[newDate.getMonth()]} ${newDate.getDate()}, ${newDate.getFullYear()}`;
     }
 }
