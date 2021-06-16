@@ -14,6 +14,7 @@ module.exports = {
               // format basic digits
               let newNumber = `${p2}-${p3}-${p4}`;
     
+              // prepend optional country code
               if (p1) {
                 newNumber = `${p1}-${newNumber}`;
               }
