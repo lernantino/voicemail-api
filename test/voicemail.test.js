@@ -39,6 +39,27 @@ describe('Requesting', () => {
         });
       });
 
+      describe('PATCH /api/voicemails/:id', () => {
+        it('should error if missing required field', async () => {
+          await request(app)
+            .patch('/api/voicemails/1')
+            .expect(400);
+        });
+        
+        it('should send correct status code', async () => {
+          await request(app)
+            .patch('/api/voicemails/1')
+            .send({ read: true })
+            .expect(204);
+            
+          // second attempt will fail because record doesn't exist
+          await request(app)
+            .patch('/api/voicemails/100')
+            .send({ read: true })
+            .expect(404);
+        });
+      });
+
       describe('DELETE /api/voicemails/:id', () => {
         it('should send correct status code', async () => {
           await request(app)
@@ -51,6 +72,7 @@ describe('Requesting', () => {
           .expect(404);
         });
       });
+
 
       
     // TODO all the tests!
